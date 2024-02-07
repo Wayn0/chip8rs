@@ -19,11 +19,11 @@ fn main() -> Result<(), String> {
     let mut canvas = window.into_canvas().build()
         .map_err(|e| e.to_string())?;
 
-    canvas.set_draw_color(Color::RGB(0, 0, 255));
+    canvas.set_draw_color(Color::RGB(0, 0, 0));
     canvas.clear();
     canvas.present();
 
-    let file = std::fs::read("data/INVADERS")
+    let file = std::fs::read("data/IBM_logo.ch8")
     .expect("Unable to read file");
     //let data = file.into_iter().map(|x| x as u8).collect::<Vec<u8>>();
 
@@ -58,7 +58,7 @@ fn main() -> Result<(), String> {
 
         // Your emulator's rendering and logic update code goes here
         // Example: just clear the screen with a different color
-        canvas.set_draw_color(Color::RGB(0, 0, 255));
+        //canvas.set_draw_color(Color::RGB(0, 0, 255));
         canvas.clear();
         canvas.present();
     }

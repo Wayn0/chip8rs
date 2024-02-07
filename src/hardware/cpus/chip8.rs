@@ -31,7 +31,7 @@ impl Chip8 {
         // opcodes are 2 bytes long
         // shift the first byte 8 bits to the left and combine it with the second byte
         // useful for bitwise operations refresher https://www.youtube.com/watch?v=6h89XQaGonE
-        // not sure about endianess, perhaps I am overthinking but hexdump shows the bytes in reverse order
+        // not sure about endianness, perhaps I am overthinking but hexdump shows the bytes in reverse order
         //(memory.read(self.registers.pc+1) as u16) << 8 | memory.read(self.registers.pc) as u16
         // I was overthinking, the bytes are in the correct order
         (memory.read(self.registers.pc) as u16) << 8 | memory.read(self.registers.pc+1) as u16
@@ -196,9 +196,20 @@ impl Chip8 {
                 //Dxyn - DRW Vx, Vy, nibble -- Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
                 let x = ((op_code & 0x0F00) >> 8) as u8;
                 let y = ((op_code & 0x00F0) >> 4) as u8;
-                let n = (op_code & 0x000F) as u8;
+                let height = (op_code & 0x000F) as u8;
                 let mut collision = false;
-                // TODO: implement
+                let mut line: u8 = 0;
+                // Todo: implement drawing
+                while line <= height {
+                    let pixels = memory.read(self.registers.i + line); // row of pixels
+                    for bit in 0..8 {
+                        if (pixels & (0x80 >> bit)) != 0 {
+                            // this gets me the bit at the position - not sure what to do with it yet
+                            // need to read more
+                        }
+                    }
+                    line += 1;
+                }
             },
             0xE000 => { // Keyboard input
                 match op_code & 0x00FF {
